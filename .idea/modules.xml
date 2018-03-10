@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Dont-Blink.iml" filepath="$PROJECT_DIR$/Dont-Blink.iml" />
       <module fileurl="file://$PROJECT_DIR$/DontBlink.iml" filepath="$PROJECT_DIR$/DontBlink.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
