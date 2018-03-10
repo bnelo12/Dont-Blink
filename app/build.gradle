@@ -20,4 +20,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'io.socket:socket.io-client:1.0.0'
 }

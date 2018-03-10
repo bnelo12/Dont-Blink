@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 
     // private EyeGesture target1 = EyeGesture.DON;
     // private EyeGesture target2 = EyeGesture.DOFF;
-    private EyeGesture target1 = EyeGesture.BLINK;
+    private EyeGesture target1 = EyeGesture.WINK;
     private EyeGesture target2 = EyeGesture.DOUBLE_BLINK;
 
     private TextView mTextView;
