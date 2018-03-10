@@ -1,5 +1,6 @@
 package com.dontblink.hack.dontblink;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -18,6 +19,10 @@ import com.google.android.glass.widget.CardScrollView;
 import com.google.android.glass.eye.EyeGesture;
 import com.google.android.glass.eye.EyeGestureManager;
 import com.google.android.glass.eye.EyeGestureManager.Listener;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+
 
 /**
  * An {@link Activity} showing a tuggable "Hello World!" card.
