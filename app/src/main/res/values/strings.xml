@@ -2,5 +2,6 @@
     <string name="app_name">Dont Blink</string>
     <string name="title_activity_main">Don\'t Blink</string>
     <string name="hello_world">Welcome to dont blink!</string>
+    <string name="you_lost">YOU LOST</string>
     <string name="glass_voice_trigger">play dont blink</string>
 </resources>
