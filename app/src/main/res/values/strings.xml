@@ -4,4 +4,6 @@
     <string name="hello_world">Welcome to dont blink!</string>
     <string name="you_lost">YOU LOST</string>
     <string name="glass_voice_trigger">play dont blink</string>
+    <string name="socket_server">http://172.20.185.50:3000/</string>
+    <string name="timer_label">5</string>
 </resources>
