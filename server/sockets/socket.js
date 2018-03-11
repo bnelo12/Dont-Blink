@@ -3,13 +3,15 @@ var io = socket_io();
 var socketApi = {};
 
 var socket = io;
+var lost_counter = 0;
 
 io.sockets.on('connection', (socket) => {
   let num_users = io.engine.clientsCount;
   console.log("Num Users: " + num_users)
   io.sockets.emit('user_connected', num_users);
-  socket.on('blinked', (network) => {
-    console.log("A user blinked!");
+  socket.on('i_lost', (network) => {
+    lost_counter++;
+    if (lost_counter >= 1) io.sockets.emit('winner', "");
   });
 });
 

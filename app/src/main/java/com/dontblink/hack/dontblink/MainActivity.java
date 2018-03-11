@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://192.168.137.155:3000");
+            mSocket = IO.socket("http://192.168.43.253:3000");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -101,6 +101,7 @@ public class MainActivity extends Activity {
         super.onCreate(bundle);
         mHandler = new Handler();
         mSocket.on("user_connected", onUserConnected);
+        mSocket.on("winner", checkWin);
         mSocket.connect();
         setContentView(R.layout.lobby);
         mEyeGestureManager = EyeGestureManager.from(this);
@@ -170,6 +171,8 @@ public class MainActivity extends Activity {
                 public void run() {
                     if (gameStarted) {
                         Log.i(TAG, eyeGesture + " is detected");
+                        gameStarted = false;
+                        mSocket.emit("i_lost", "");
                         timerView.setBackgroundColor(0xfff00000);
                         timerView.setText("YOU\nLOSE!");
                         (new Handler()).postDelayed(new Runnable() {
@@ -177,7 +180,7 @@ public class MainActivity extends Activity {
                             public void run() {
                                 setContentView(R.layout.lobby);
                                 mSocket.disconnect();
-                                mSocket.connect();
+                                System.exit(0);
                             }
                         }, 1000);
 
@@ -201,6 +204,9 @@ public class MainActivity extends Activity {
                     if (userCount > 2) {
                         ImageView userIcon3 = (ImageView)findViewById(R.id.user_icon_3);
                         userIcon3.setImageResource(R.drawable.user_icon_green);
+                        setContentView(R.layout.timer);
+                        startTimer();
+                        return;
                     }
                     if (userCount > 1) {
                         ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_2);
@@ -209,9 +215,6 @@ public class MainActivity extends Activity {
                     if (userCount > 0) {
                         ImageView userIcon1 = (ImageView)findViewById(R.id.user_icon_1);
                         userIcon1.setImageResource(R.drawable.user_icon_red);
-                        setContentView(R.layout.timer);
-                        startTimer();
-                        return;
                     }
 
 
@@ -219,6 +222,22 @@ public class MainActivity extends Activity {
                     Log.i(TAG, String.valueOf(userCount));
                     // add the message to view
                     //addMessage(username, message);
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener checkWin = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (gameStarted) {
+                        timerView.setBackgroundColor(0x000fff00);
+                        timerView.setText("YOU\nWIN!!");
+                        gameStarted = false;
+                    }
                 }
             });
         }
