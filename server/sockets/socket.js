@@ -4,8 +4,10 @@ var socketApi = {};
 
 var socket = io;
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
+io.sockets.on('connection', (socket) => {
+  let num_users = io.engine.clientsCount;
+  console.log("Num Users: " + num_users)
+  io.sockets.emit('user_connected', num_users);
   socket.on('blinked', (network) => {
     console.log("A user blinked!");
   });

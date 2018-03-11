@@ -1,5 +1,7 @@
 package com.dontblink.hack.dontblink;
 
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.util.Log;
 import android.os.Handler;
 
@@ -25,6 +28,7 @@ import com.google.android.glass.eye.EyeGestureManager.Listener;
 import java.net.URISyntaxException;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 
 public class MainActivity extends Activity {
@@ -58,11 +62,13 @@ public class MainActivity extends Activity {
     private int timeToStart = 5;
     private boolean gameStarted = false;
 
+    private int userCount = 0;
+
     // Socket Variables
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://192.168.43.253:3000");
+            mSocket = IO.socket("http://192.168.137.155:3000");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -90,11 +96,11 @@ public class MainActivity extends Activity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         mHandler = new Handler();
+        mSocket.on("user_connected", onUserConnected);
         mSocket.connect();
         setContentView(R.layout.lobby);
 //        timerView = (TextView)findViewById(R.id.timer_label);
@@ -171,6 +177,37 @@ public class MainActivity extends Activity {
             });
         }
     }
+
+    private Emitter.Listener onUserConnected = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    userCount = (Integer)args[0];
+                    if (userCount > 0) {
+                        ImageView userIcon1 = (ImageView)findViewById(R.id.user_icon_1);
+                        userIcon1.setImageResource(R.drawable.user_icon_red);
+                    }
+                    if (userCount > 1) {
+                        ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_2);
+                        userIcon2.setImageResource(R.drawable.user_icon_blue);
+                    }
+                    if (userCount > 2) {
+                        ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_3);
+                        userIcon2.setImageResource(R.drawable.user_icon_green);
+                    }
+                    if (userCount > 3) {
+                        ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_4);
+                        userIcon2.setImageResource(R.drawable.user_icon_yellow);
+                    }
+                    Log.i(TAG, String.valueOf(userCount));
+                    // add the message to view
+                    //addMessage(username, message);
+                }
+            });
+        }
+    };
 
 }
 

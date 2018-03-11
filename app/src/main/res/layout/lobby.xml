@@ -66,28 +66,28 @@
             android:id="@+id/linearLayout">
 
             <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/user_icon_red" />
-
-            <ImageView
-                android:id="@+id/imageView18"
+                android:id="@+id/user_icon_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/user_icon_grey" />
 
             <ImageView
-                android:id="@+id/imageView17"
+                android:id="@+id/user_icon_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/user_icon_grey" />
 
             <ImageView
-                android:id="@+id/imageView16"
+                android:id="@+id/user_icon_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/user_icon_grey" />
+
+            <ImageView
+                android:id="@+id/user_icon_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
