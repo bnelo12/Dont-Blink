@@ -103,8 +103,6 @@ public class MainActivity extends Activity {
         mSocket.on("user_connected", onUserConnected);
         mSocket.connect();
         setContentView(R.layout.lobby);
-//        timerView = (TextView)findViewById(R.id.timer_label);
-//        timerView.setText("4");
         mEyeGestureManager = EyeGestureManager.from(this);
         mEyeGestureListener = new EyeGestureListener();
 
@@ -140,11 +138,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        mSocket.connect();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        mSocket.disconnect();
     }
 
     /**
@@ -172,6 +172,15 @@ public class MainActivity extends Activity {
                         Log.i(TAG, eyeGesture + " is detected");
                         timerView.setBackgroundColor(0xfff00000);
                         timerView.setText("YOU\nLOSE!");
+                        (new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setContentView(R.layout.lobby);
+                                mSocket.disconnect();
+                                mSocket.connect();
+                            }
+                        }, 1000);
+
                     }
                 }
             });
@@ -185,22 +194,28 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     userCount = (Integer)args[0];
-                    if (userCount > 0) {
-                        ImageView userIcon1 = (ImageView)findViewById(R.id.user_icon_1);
-                        userIcon1.setImageResource(R.drawable.user_icon_red);
+                    if (userCount > 3) {
+                        ImageView userIcon4 = (ImageView)findViewById(R.id.user_icon_4);
+                        userIcon4.setImageResource(R.drawable.user_icon_yellow);
+                    }
+                    if (userCount > 2) {
+                        ImageView userIcon3 = (ImageView)findViewById(R.id.user_icon_3);
+                        userIcon3.setImageResource(R.drawable.user_icon_green);
                     }
                     if (userCount > 1) {
                         ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_2);
                         userIcon2.setImageResource(R.drawable.user_icon_blue);
                     }
-                    if (userCount > 2) {
-                        ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_3);
-                        userIcon2.setImageResource(R.drawable.user_icon_green);
+                    if (userCount > 0) {
+                        ImageView userIcon1 = (ImageView)findViewById(R.id.user_icon_1);
+                        userIcon1.setImageResource(R.drawable.user_icon_red);
+                        setContentView(R.layout.timer);
+                        startTimer();
+                        return;
                     }
-                    if (userCount > 3) {
-                        ImageView userIcon2 = (ImageView)findViewById(R.id.user_icon_4);
-                        userIcon2.setImageResource(R.drawable.user_icon_yellow);
-                    }
+
+
+
                     Log.i(TAG, String.valueOf(userCount));
                     // add the message to view
                     //addMessage(username, message);
