@@ -11,7 +11,7 @@ io.sockets.on('connection', (socket) => {
   io.sockets.emit('user_connected', num_users);
   socket.on('i_lost', (network) => {
     lost_counter++;
-    if (lost_counter >= 1) io.sockets.emit('winner', "");
+    if (lost_counter >= 2) io.sockets.emit('winner', "");
   });
 });
 
